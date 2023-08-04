@@ -1,25 +1,13 @@
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React from "react";
+import { View } from "react-native";
+import MapWithRouteScreen from "./MapWithRouteScreen";
 
-
-export default function App() {
+const App = () => {
   return (
-    <MapView
-      provider={PROVIDER_GOOGLE}
-      style={styles.map}
-      initialRegion={{
-        latitude: -34.603738,
-        longitude: -58.38157,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-      }}
-    />
+    <View style={{ flex: 1 }}>
+      <MapWithRouteScreen />
+    </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  map: {
-    flex: 1,
-  },
-});
+export default App;
