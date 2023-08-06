@@ -6,7 +6,7 @@ import {
   StyleSheet,
   View,
 } from "react-native";
-import ModalContent from "./ModalContent";
+import ModalContent from "./components/ModalContent";
 import { WINDOW_HEIGHT } from "./utils";
 
 type DirectionType = "up" | "center" | "bottom";
@@ -15,7 +15,7 @@ const BOTTOM_SHEET_MIN_HEIGHT = WINDOW_HEIGHT * 0.1;
 const MAX_UPWARD_TRANSLATE_Y =
   BOTTOM_SHEET_MIN_HEIGHT - BOTTOM_SHEET_MAX_HEIGHT;
 const MAX_CENTER_WARD_TRANSLATE_Y = 0;
-const MAX_BOTTOM_WARD_TRANSLATE_Y = 200;
+const MAX_BOTTOM_WARD_TRANSLATE_Y = 300;
 const DRAG_THRESHOLD = 50;
 
 const Test = () => {
@@ -104,10 +104,9 @@ const Test = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // marginTop: 25,
     position: "absolute",
     width: "100%",
-    top: WINDOW_HEIGHT / 1.75 - 25,
+    top: WINDOW_HEIGHT / 2,
   },
   bottomSheet: {
     ...Platform.select({

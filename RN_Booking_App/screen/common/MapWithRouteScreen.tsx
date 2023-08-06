@@ -1,18 +1,20 @@
-import React, { useState, useCallback, useRef } from "react";
-import { StyleSheet, View, Button } from "react-native";
+import React, { useCallback, useRef } from "react";
+import { StyleSheet, View, Pressable, Image, StatusBar } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
-import {
-  WINDOW_HEIGHT,
-  WINDOW_WIDTH,
-  getCoordinatesFromAddress,
-} from "./utils";
-import ModalContent from "./ModalContent";
-import Test from "./Test";
+import { WINDOW_HEIGHT } from "../../utils";
+import Test from "../../Test";
+import { icon } from "../../assets";
+import { useNavigation } from "@react-navigation/native";
 
-const apiKey = "AIzaSyD26QbOA0Qr9KCGlOGgBxEd-7CkAJo5lSsw"; //AIzaSyD26QbOA0Qr9KCGlOGgBxEd-7CkAJo5lSw
+const apiKey = "API_KEY";
 
 const MapWithRouteScreen = () => {
+  const navigation = useNavigation();
+
+  const handleRootBack = () => {
+    navigation.navigate("Job", { screen: "BookCarScreen" });
+  };
   const mapRef = useRef(null);
   const origin = { latitude: 1.32796, longitude: 103.74442 };
   const destination = { latitude: 1.30718, longitude: 103.83381 };
@@ -21,7 +23,11 @@ const MapWithRouteScreen = () => {
     return (
       <>
         <Marker coordinate={origin} title="Starting Point" />
-        <Marker coordinate={destination} title="Destination Point" />
+        <Marker
+          coordinate={destination}
+          icon={icon.car_ic_map}
+          title="Destination Point"
+        />
       </>
     );
   }, []);
@@ -37,6 +43,10 @@ const MapWithRouteScreen = () => {
 
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="dark-content" />
+      <Pressable onPress={handleRootBack} style={styles.iconBackContainer}>
+        <Image style={styles.iconBack} source={icon.back} />
+      </Pressable>
       <MapView
         ref={mapRef}
         style={styles.map}
@@ -51,19 +61,17 @@ const MapWithRouteScreen = () => {
           origin={origin}
           destination={destination}
           apikey={apiKey}
-          strokeWidth={4}
-          strokeColor="hotpink"
+          strokeWidth={5}
+          strokeColor="#5791FD"
           mode={"TRANSIT"}
         />
         {renderMarkers()}
       </MapView>
-
       <View style={styles.buttonContainer}>
-        <Button title="Move to Origin" onPress={fitToMarkers} />
+        <Pressable onPress={fitToMarkers} style={styles.iconTargetContainer}>
+          <Image style={styles.iconTarget} source={icon.target} />
+        </Pressable>
       </View>
-      {/* <ModalContent />
-       */}
-
       <Test />
     </View>
   );
@@ -81,6 +89,36 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: WINDOW_HEIGHT / 2.5,
     right: 15,
+  },
+  iconTargetContainer: {
+    width: 45,
+    height: 45,
+    borderRadius: 45,
+    backgroundColor: "#FFFFFF",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  iconTarget: {
+    width: 25,
+    height: 25,
+  },
+
+  iconBackContainer: {
+    position: "absolute",
+    top: 35,
+    left: 15,
+    zIndex: 9,
+    width: 40,
+    height: 40,
+    borderRadius: 40,
+    backgroundColor: "#FFFFFF",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  iconBack: {
+    width: 10,
+    height: 17,
+    resizeMode: "cover",
   },
 });
 
